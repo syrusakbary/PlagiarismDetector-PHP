@@ -1,6 +1,5 @@
 <?
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+include_once(PLAGIARISM_DIR.'plagiarismDetectorPlugin.php');
 
 class plagiarismDetectorPluginAc extends plagiarismDetectorPlugin
 {
@@ -22,13 +21,11 @@ class plagiarismDetectorPluginAc extends plagiarismDetectorPlugin
                                  2 => array('pipe', 'w')),
                            $io);
 
-            /* Read output sent to stdout. */
             $output = "";
             while (!feof($io[1])) {
                 $output .= htmlspecialchars(fgets($io[1]),
                                                         ENT_COMPAT, 'UTF-8');
             }
-            /* Read output sent to stderr. */
             while (!feof($io[2])) {
                 $output .= htmlspecialchars(fgets($io[2]),
                                                         ENT_COMPAT, 'UTF-8');
@@ -46,7 +43,6 @@ class plagiarismDetectorPluginAc extends plagiarismDetectorPlugin
     }
     public function readOutputFile ($output) {
         preg_match('/Resultados guardados en (.*)/',$output,$matches);
-        //var_dump($output);
         $file = $matches[1];
         return $file;
     }
@@ -58,8 +54,6 @@ class plagiarismDetectorPluginAc extends plagiarismDetectorPlugin
         foreach ($match as $line) {
             $this->addDistance( $line[2], $line[3], $line[1]);
         }
-        //var_dump($out);
-        //$this->results = $out;
         return $this;
     }
     public static function info () {
@@ -68,8 +62,3 @@ class plagiarismDetectorPluginAc extends plagiarismDetectorPlugin
         );
     }
 }
-/*$m = new mAntiPlagiarismAC();
-var_dump($m->compareDir('/home/syrus/plagism/AC/test/sample_aa')->getSimilarity(0.7));*/
-//var_dump($m->readFile('asdf')->->getResults());
-//var_dump($m->compareDir('/home/syrus/plagism/AC/test/sample_aa')->getDistance(1));
-//var_dump($m->readFile('/tmp/anticopia4576802438527145659.txt')->getSimilarity(0.7));

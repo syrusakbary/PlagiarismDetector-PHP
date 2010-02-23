@@ -1,7 +1,6 @@
 <?
 define(PLAGIARISM_DIR,dirname(__FILE__).'/');
 
-include_once(PLAGIARISM_DIR.'plagiarismDetectorPlugin.php');
 class plagiarismDetector
 {
     private $plugins;
@@ -36,5 +35,3 @@ class plagiarismDetector
         }
     }
 }
-$pla = new plagiarismDetector;
-//var_dump($pla->plugin('ac'));
